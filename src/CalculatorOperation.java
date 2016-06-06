@@ -42,36 +42,12 @@ public class CalculatorOperation extends JPanel {
         buttonEqual.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("TestNum1: " + cv.getNumber1() + " TestNum2:" + cv.getNumber2());
-                System.out.println("TestChar: " + cv.getSymbol());
-                int num1 = Integer.valueOf(cv.getNumber1());
-                int num2 = Integer.valueOf(cv.getNumber2());
-                float result = 0;
-                switch (cv.getSymbol()) {
-                    case '+':
-                        result = num1 + num2;
-                        break;
-                    case '-':
-                        result = num1 - num2;
-                        break;
-                    case '*':
-                        result = num1 * num2;
-                        break;
-                    case '/':
-                        if (num2 == 0) {
-                            try {
-                                throw new Exception("Divide by 0");
-                            } catch (Exception e1) {
-                                JOptionPane.showMessageDialog(null, "You can't divide by 0");
-
-                            }
-                        }
-                        result = (float)num1 / (float)num2;
-
-
-                        break;
+                try {
+                    forButtonEquals();
+                } catch (DivisionBy0 divisionBy0) {
+                    System.out.println(divisionBy0.getMessage());
+                    JOptionPane.showMessageDialog(null, "You can't divide by 0");
                 }
-                display.setText(String.valueOf(result));
 
 
             }
@@ -105,5 +81,31 @@ public class CalculatorOperation extends JPanel {
                 cv.setSymbol('/');
             }
         });
+    }
+
+    private void forButtonEquals() throws DivisionBy0 {
+        System.out.println("TestNum1: " + cv.getNumber1() + " TestNum2:" + cv.getNumber2());
+        System.out.println("TestChar: " + cv.getSymbol());
+        int num1 = Integer.valueOf(cv.getNumber1());
+        int num2 = Integer.valueOf(cv.getNumber2());
+        float result = 0;
+        switch (cv.getSymbol()) {
+            case '+':
+                result = num1 + num2;
+                break;
+            case '-':
+                result = num1 - num2;
+                break;
+            case '*':
+                result = num1 * num2;
+                break;
+            case '/':
+                if (num2 == 0) {
+                    throw new DivisionBy0("Divide by 0");
+                }
+                result = (float) num1 / (float) num2;
+                break;
+        }
+        display.setText(String.valueOf(result));
     }
 }
