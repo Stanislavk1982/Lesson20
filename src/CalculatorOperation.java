@@ -47,7 +47,7 @@ public class CalculatorOperation extends JPanel {
                     result = forButtonEquals();
                 } catch (DivisionBy0 divisionBy0) {
                     System.out.println(divisionBy0.getMessage());
-                    JOptionPane.showMessageDialog(null, "You can't divide by 0");
+                    JOptionPane.showMessageDialog(null, divisionBy0.getMessage());
                 }
                 display.setText(String.valueOf(result));
             }
